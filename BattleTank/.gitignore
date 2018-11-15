@@ -1,3 +1,13 @@
+# Custom - Unreal derived directories
+Content/StarterContent/Textures/
+Content/StarterContent/HDRI/
+
+# Custom - Visual Studio derived files
+.vs/**/ipch/
+*.VC.db-wal
+
+#####################
+
 # Visual Studio 2015 user specific files
 .vs/
 
