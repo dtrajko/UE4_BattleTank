@@ -3,11 +3,6 @@
 #include "../Public/TankAIController.h"
 
 
-ATank * ATankAIController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -30,6 +25,18 @@ void ATankAIController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController of the tank %s found the player tank %s"), *(ControlledTank->GetName()), *(PlayerTank->GetName()));
 	}
+}
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	// UE_LOG(LogTemp, Warning, TEXT("AIController ticking for %s"), *(GetControlledTank())->GetName());
+
+}
+
+ATank * ATankAIController::GetControlledTank() const
+{
+	return Cast<ATank>(GetPawn());
 }
 
 ATank * ATankAIController::GetPlayerTank() const
