@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "Tank.generated.h"
 
 UCLASS()
@@ -12,6 +13,8 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
+	void AimAt(FVector HitLocation);
+
 	// Sets default values for this pawn's properties
 	ATank();
 

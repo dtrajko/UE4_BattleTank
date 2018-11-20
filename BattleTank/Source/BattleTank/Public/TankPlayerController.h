@@ -6,6 +6,8 @@
 #include "BattleTank.h"
 #include "Tank.h"
 #include "GameFramework/PlayerController.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "TankPlayerController.generated.h"
 
 /**
@@ -34,6 +36,8 @@ private:
 
 	bool GetLookDirection(FVector2D &ScreenLocation, FVector &LookDirection) const;
 
+	bool GetLookVectorHitLocation(FVector &LookDirection, OUT FVector &HitLocation) const;
+
 private:
 
 	UPROPERTY(EditAnywhere)
@@ -41,5 +45,8 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float CrossHairLocationY = 0.3333f;
-	
+
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000.0f; // 10km = 10.000m = 1.000.000cm
+
 };
