@@ -8,6 +8,7 @@
 
 // Forward Declarations
 class UTankBarrel;
+class UTankTurret;
 class UStaticMeshComponent;
 
 // Holds barrel's properties and Elevate() method 
@@ -21,7 +22,7 @@ public:
 	UTankAimingComponent();
 
 	void SetBarrelReference(UTankBarrel * BarrelToSet);
-	void SetTurretReference(UStaticMeshComponent * TurretToSet);
+	void SetTurretReference(UTankTurret * TurretToSet);
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
