@@ -108,5 +108,5 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// UE_LOG(LogTemp, Warning, TEXT("BarrelRotator: %s, AimAsRotator: %s, DeltaRotator: %s"),
 	// 	*BarrelRotator.ToString(), *AimAsRotator.ToString(), *DeltaRotator.ToString())
 
-	Barrel->Elevate(5); // TODO - remove magic number (5 degrees per second)
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO - remove magic number (5 degrees per second)
 }
