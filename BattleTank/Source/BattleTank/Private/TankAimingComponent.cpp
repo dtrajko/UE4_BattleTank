@@ -1,5 +1,6 @@
    // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "TankAimingComponent.h"
 
 
@@ -8,7 +9,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = true; // TODO - Should this really tick?
 
 	// ...
 }
@@ -75,10 +76,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		// 	*OutLaunchVelocity.ToString(), LaunchSpeed, *StartLocation.ToString(), *HitLocation.ToString(), *AimDirection.ToString())
 		// UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString())
 
-		UE_LOG(LogTemp, Warning, TEXT("Tank %s aiming at %s"), *TankName, *AimDirection.ToString())
+		// UE_LOG(LogTemp, Warning, TEXT("Tank %s aiming at %s"), *TankName, *AimDirection.ToString())
 		DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor::Red, false, 0.0f, 0.0f, 2.0f);
 
 		MoveBarrelTowards(AimDirection);
+
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found."), Time)
+	}
+	else
+	{
+		auto Time = GetWorld()->GetTimeSeconds();
+		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found."), Time)
 	}
 	// If solution not found - do nothing
 }
