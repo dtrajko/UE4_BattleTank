@@ -39,6 +39,6 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	UPROPERTY(EditAnywhere, Category = Firing)
-	float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
+	float LaunchSpeed = 10000.0f; // Sensible starting value of 1000 m/s
 
 };
