@@ -2,17 +2,13 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Runtime/Engine/Public/DrawDebugHelpers.h"
-#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
-#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
-#include "TankBarrel.h"
 #include "TankAimingComponent.generated.h"
 
 
-// Forward Declaration
+// Forward Declarations
 class UTankBarrel;
+class UStaticMeshComponent;
 
 // Holds barrel's properties and Elevate() method 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )

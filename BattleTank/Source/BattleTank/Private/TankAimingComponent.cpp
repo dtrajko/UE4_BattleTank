@@ -1,6 +1,10 @@
-   // Fill out your copyright notice in the Description page of Project Settings.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Runtime/Engine/Classes/Engine/World.h"
+#include "Runtime/Engine/Public/DrawDebugHelpers.h"
+#include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -54,18 +58,20 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	// Calculate the OutLaunchVelocity
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
 	(
-		this,                                        // const UObject * WorldContextObject,
-		OutLaunchVelocity,                           // FVector & TossVelocity,
-		StartLocation,                               // FVector StartLocation,
-		HitLocation,                                 // FVector EndLocation,
-		LaunchSpeed,                                 // float TossSpeed,
-		false,                                       // bool bHighArc,
-		0,                                           // float CollisionRadius,
-		0,                                           // float OverrideGravityZ,
-		ESuggestProjVelocityTraceOption::DoNotTrace  // ESuggestProjVelocityTraceOption::Type TraceOption,
-	);	                                             // const FCollisionResponseParams & ResponseParam,
-			                                         // const TArray < AActor * > & ActorsToIgnore,
-			                                         // bool bDrawDebug
+		this,                                          // const UObject * WorldContextObject,
+		OutLaunchVelocity,                             // FVector & TossVelocity,
+		StartLocation,                                 // FVector StartLocation,
+		HitLocation,                                   // FVector EndLocation,
+		LaunchSpeed,                                   // float TossSpeed,
+		false,                                         // bool bHighArc,
+		0,                                             // float CollisionRadius,
+		0,                                             // float OverrideGravityZ,
+		ESuggestProjVelocityTraceOption::DoNotTrace    // ESuggestProjVelocityTraceOption::Type TraceOption,
+	);	                                               // const FCollisionResponseParams & ResponseParam,
+			                                           // const TArray < AActor * > & ActorsToIgnore,
+			                                           // bool bDrawDebug
+
+	// UE_LOG(LogTemp, Warning, TEXT("bHaveAimSolution: %s, HitLocation: %s"), (bHaveAimSolution ? "TRUE" : "FALSE"), *HitLocation.ToString())
 
 	if (bHaveAimSolution)
 	{
@@ -82,12 +88,12 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		MoveBarrelTowards(AimDirection);
 
 		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim solution found."), Time)
+		UE_LOG(LogTemp, Warning, TEXT("%f: [%s] Aim solution found."), Time, *GetOwner()->GetName())
 	}
 	else
 	{
 		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: No aim solution found."), Time)
+		UE_LOG(LogTemp, Warning, TEXT("%f: [%s] No aim solution found."), Time, *GetOwner()->GetName())
 	}
 	// If solution not found - do nothing
 }
