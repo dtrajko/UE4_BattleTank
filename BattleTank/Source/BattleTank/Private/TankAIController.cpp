@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Tank.h"
 #include "../Public/TankAIController.h"
+#include "Tank.h"
 
 
 void ATankAIController::BeginPlay()
@@ -43,9 +43,6 @@ void ATankAIController::Tick(float DeltaTime)
 		// Fire if ready
 
 	}
-
-	// UE_LOG(LogTemp, Warning, TEXT("AIController ticking for %s"), *(GetControlledTank())->GetName());
-
 }
 
 ATank * ATankAIController::GetControlledTank() const

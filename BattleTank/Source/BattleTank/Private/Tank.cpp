@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TankAimingComponent.h"
 #include "../Public/Tank.h"
+#include "TankAimingComponent.h"
 
 
 // Sets default values
@@ -19,6 +19,12 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay();
 	
+}
+
+void ATank::Fire()
+{
+	auto Time = GetWorld()->GetTimeSeconds();
+	UE_LOG(LogTemp, Warning, TEXT("%f: Tank fires."), Time)
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)

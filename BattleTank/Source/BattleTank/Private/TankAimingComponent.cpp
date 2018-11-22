@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "TankAimingComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "Runtime/Engine/Public/DrawDebugHelpers.h"
 #include "Runtime/Engine/Classes/Components/StaticMeshComponent.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
-#include "TankAimingComponent.h"
 
 
 // Sets default values for this component's properties
@@ -66,31 +66,15 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 			                                           // const TArray < AActor * > & ActorsToIgnore,
 			                                           // bool bDrawDebug
 
-	// UE_LOG(LogTemp, Warning, TEXT("bHaveAimSolution: %s, HitLocation: %s"), (bHaveAimSolution ? "TRUE" : "FALSE"), *HitLocation.ToString())
-
 	if (bHaveAimSolution)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
 
-		// UE_LOG(LogTemp, Warning, TEXT("SuggestProjectileVelocity OutLaunchVelocity: %s, LaunchSpeed: %f, StartLocation: %s, HitLocation: %s, AimDirection: %s"),
-		// 	*OutLaunchVelocity.ToString(), LaunchSpeed, *StartLocation.ToString(), *HitLocation.ToString(), *AimDirection.ToString())
-		// UE_LOG(LogTemp, Warning, TEXT("%s aiming at %s from %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString())
-
-		// UE_LOG(LogTemp, Warning, TEXT("Tank %s aiming at %s"), *TankName, *AimDirection.ToString())
 		DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor::Red, false, 0.0f, 0.0f, 2.0f);
 
 		MoveBarrelTowards(AimDirection);
-
-		// auto Time = GetWorld()->GetTimeSeconds();
-		// UE_LOG(LogTemp, Warning, TEXT("%f: [%s] Aim solution found."), Time, *GetOwner()->GetName())
 	}
-	else
-	{
-		// auto Time = GetWorld()->GetTimeSeconds();
-		// UE_LOG(LogTemp, Warning, TEXT("%f: [%s] No aim solution found."), Time, *GetOwner()->GetName())
-	}
-	// If solution not found - do nothing
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -99,9 +83,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
 	FRotator AimAsRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
-
-	// UE_LOG(LogTemp, Warning, TEXT("BarrelRotator: %s, AimAsRotator: %s, DeltaRotator: %s"),
-	// 	*BarrelRotator.ToString(), *AimAsRotator.ToString(), *DeltaRotator.ToString())
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 	Turret->Rotate(DeltaRotator.Yaw);
