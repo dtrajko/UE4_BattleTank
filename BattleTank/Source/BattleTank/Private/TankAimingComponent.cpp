@@ -14,7 +14,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true; // TODO - Should this really tick?
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -38,14 +38,6 @@ void UTankAimingComponent::BeginPlay()
 
 	// ...
 	
-}
-
-// Called every frame
-void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
@@ -90,13 +82,13 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 
 		MoveBarrelTowards(AimDirection);
 
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: [%s] Aim solution found."), Time, *GetOwner()->GetName())
+		// auto Time = GetWorld()->GetTimeSeconds();
+		// UE_LOG(LogTemp, Warning, TEXT("%f: [%s] Aim solution found."), Time, *GetOwner()->GetName())
 	}
 	else
 	{
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: [%s] No aim solution found."), Time, *GetOwner()->GetName())
+		// auto Time = GetWorld()->GetTimeSeconds();
+		// UE_LOG(LogTemp, Warning, TEXT("%f: [%s] No aim solution found."), Time, *GetOwner()->GetName())
 	}
 	// If solution not found - do nothing
 }
@@ -111,5 +103,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// UE_LOG(LogTemp, Warning, TEXT("BarrelRotator: %s, AimAsRotator: %s, DeltaRotator: %s"),
 	// 	*BarrelRotator.ToString(), *AimAsRotator.ToString(), *DeltaRotator.ToString())
 
-	Barrel->Elevate(DeltaRotator.Pitch); // TODO - remove magic number (5 degrees per second)
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
 }
