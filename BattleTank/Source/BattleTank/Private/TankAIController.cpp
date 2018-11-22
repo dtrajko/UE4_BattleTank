@@ -37,7 +37,8 @@ void ATankAIController::Tick(float DeltaTime)
 		// TODO move towards the player
 
 		// Aim towards the player
-		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+		FVector AimHigher(0, 0, 140); // aim higher than the ground level
+		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation() + AimHigher);
 
 		// Fire if ready
 
