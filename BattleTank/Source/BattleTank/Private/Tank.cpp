@@ -31,11 +31,13 @@ void ATank::Fire()
 
 	if (!Barrel) return;
 	// Spawn a projectile at the socket location
-	GetWorld()->SpawnActor<AProjectile>(
+	AProjectile * Projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint,
 		Barrel->GetSocketLocation(FName("TubeEnd")),
 		Barrel->GetSocketRotation(FName("TubeEnd"))
 		);
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
