@@ -71,7 +71,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		FString TankName = GetOwner()->GetName();
 
-		DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor::Red, false, 0.0f, 0.0f, 2.0f);
+		DrawDebugLine(GetWorld(), StartLocation, HitLocation, FColor::Red, false, 0.0f, 0.0f, 4.0f);
 
 		MoveBarrelTowards(AimDirection);
 	}
