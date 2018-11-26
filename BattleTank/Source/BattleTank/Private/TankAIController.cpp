@@ -32,16 +32,19 @@ void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (GetPlayerTank())
+	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+	auto ControlledTank = Cast<ATank>(GetPawn());
+
+	if (PlayerTank)
 	{
 		// TODO move towards the player
 
 		// Aim towards the player
 		FVector AimHigher(0, 0, 140); // aim higher than the ground level
-		GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation() + AimHigher);
+		ControlledTank->AimAt(PlayerTank->GetActorLocation() + AimHigher);
 
 		// Fire if ready
-
+		ControlledTank->Fire();
 	}
 }
 

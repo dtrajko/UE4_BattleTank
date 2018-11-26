@@ -29,15 +29,20 @@ void ATank::Fire()
 	auto Time = GetWorld()->GetTimeSeconds();
 	UE_LOG(LogTemp, Warning, TEXT("%f: Tank fires."), Time)
 
-	if (!Barrel) return;
-	// Spawn a projectile at the socket location
-	AProjectile * Projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("TubeEnd")),
-		Barrel->GetSocketRotation(FName("TubeEnd"))
-		);
+	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	Projectile->LaunchProjectile(LaunchSpeed);
+	if (Barrel && isReloaded)
+	{
+		// Spawn a projectile at the socket location
+		AProjectile * Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("TubeEnd")),
+			Barrel->GetSocketRotation(FName("TubeEnd"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
