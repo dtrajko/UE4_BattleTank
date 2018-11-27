@@ -46,7 +46,7 @@ public:
 		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float LaunchSpeed = 5000.0f; // Sensible starting value of 1000 m/s
+		float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
 
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float ReloadTimeInSeconds = 5;
