@@ -38,6 +38,7 @@ void ATankAIController::Tick(float DeltaTime)
 	if (PlayerTank)
 	{
 		// TODO move towards the player
+		MoveToActor(PlayerTank, AcceptanceRadius);
 
 		// Aim towards the player
 		FVector AimHigher(0, 0, 140); // aim higher than the ground level
