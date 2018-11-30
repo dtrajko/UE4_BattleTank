@@ -2,11 +2,9 @@
 
 #include "../Public/Tank.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
+#include "TankBarrel.h"
 #include "Projectile.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
-#include "TankBarrel.h"
-
 
 // Sets default values
 ATank::ATank()
@@ -22,12 +20,10 @@ void ATank::BeginPlay()
 
 void ATank::Fire()
 {
-	// auto Time = GetWorld()->GetTimeSeconds();
-	// UE_LOG(LogTemp, Warning, TEXT("%f: Tank fires."), Time)
+	if (!ensure(Barrel)) { return; }
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
-
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
 		// Spawn a projectile at the socket location
 		AProjectile * Projectile = GetWorld()->SpawnActor<AProjectile>(
@@ -43,7 +39,7 @@ void ATank::Fire()
 
 void ATank::AimAt(FVector HitLocation)
 {
-	if (!TankAimingComponent) { return; }
+	if (!ensure(TankAimingComponent)) { return; }
 
 	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }

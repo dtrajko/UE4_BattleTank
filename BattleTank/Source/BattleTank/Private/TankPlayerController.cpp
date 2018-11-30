@@ -9,7 +9,7 @@
 void ATankPlayerController::BeginPlay()
 {
 	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	if (ensure(ControlledTank))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a tank."));
 	}
@@ -19,7 +19,7 @@ void ATankPlayerController::BeginPlay()
 	}
 
 	UTankAimingComponent * TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (TankAimingComponent)
+	if (ensure(TankAimingComponent))
 	{
 		FoundAimingComponent(TankAimingComponent);
 	}
@@ -38,18 +38,16 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank()) { return; }
+	ATank * ControlledTank = GetControlledTank();
+	if (!ensure(ControlledTank)) { return; };
 
 	FVector HitLocation;
-
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to ray trace
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		ControlledTank->AimAt(HitLocation);
 	}
-	
 	// If it hits the landscape
 		// Tell controller tank to aim at this point
-
 }
 
 // Get world location if linetrace through crosshair, true if hits landscape
@@ -58,7 +56,7 @@ bool ATankPlayerController::GetSightRayHitLocation(OUT FVector & HitLocation) co
 	// Find the crosshair position in pixel coordinates
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
-	auto ScreenLocation = FVector2D(ViewportSizeX * CrossHairLocationX, ViewportSizeY * CrossHairLocationY);
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairLocationX, ViewportSizeY * CrossHairLocationY);
 
 	// "De-project" the screen position of the crosshair to a world direction
 	FVector LookDirection;

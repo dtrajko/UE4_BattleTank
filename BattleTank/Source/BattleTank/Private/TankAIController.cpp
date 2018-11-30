@@ -9,7 +9,7 @@ void ATankAIController::BeginPlay()
 	Super::BeginPlay();
 
 	auto ControlledTank = GetControlledTank();
-	if (!ControlledTank)
+	if (!ensure(ControlledTank))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController not possessing a tank."));
 	}
@@ -18,7 +18,7 @@ void ATankAIController::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("AIController posessing %s"), *(ControlledTank->GetName()));
 	}
 	auto PlayerTank = GetPlayerTank();
-	if (!PlayerTank)
+	if (!ensure(PlayerTank))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AIController can't find the player tank."));
 	}
@@ -35,7 +35,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank)
+	if (ensure(PlayerTank))
 	{
 		// TODO move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius);
@@ -57,9 +57,7 @@ ATank * ATankAIController::GetControlledTank() const
 ATank * ATankAIController::GetPlayerTank() const
 {
 	auto PlayerPawn = GetWorld()->GetFirstPlayerController()->GetPawn();
-	if (!PlayerPawn)
-	{
-		return nullptr;
-	}
+	if (!ensure(PlayerPawn)) { return nullptr; }
+
 	return Cast<ATank>(PlayerPawn);
 }
