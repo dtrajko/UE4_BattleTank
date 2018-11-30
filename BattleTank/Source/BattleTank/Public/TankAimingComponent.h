@@ -11,6 +11,15 @@ class UTankBarrel;
 class UTankTurret;
 class UStaticMeshComponent;
 
+// Enum for aiming state
+UENUM()
+enum class EFiringState : uint8
+{
+	Reloading,
+	Aiming,
+	Locked
+};
+
 // Holds barrel's properties and Elevate() method 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -29,6 +38,9 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly, Category = "State")
+		EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	UTankBarrel * Barrel = nullptr;
