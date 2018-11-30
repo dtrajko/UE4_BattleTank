@@ -23,10 +23,13 @@ public:
 
 	virtual void BeginPlay() override;
 
+	void AimAt(FVector HitLocation);
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+		void Initialize(UTankBarrel * BarrelToSet);
+
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
-
-	void AimAt(FVector HitLocation);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
