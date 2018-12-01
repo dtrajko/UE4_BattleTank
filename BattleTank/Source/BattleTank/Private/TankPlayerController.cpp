@@ -2,7 +2,6 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 
 
@@ -10,24 +9,10 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto ControlledTank = GetControlledTank();
-	if (ensure(ControlledTank))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController posessing %s"), *(ControlledTank->GetName()));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing a tank."));
-	}
-	UTankAimingComponent * TankAimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(TankAimingComponent))
-	{
-		FoundAimingComponent(TankAimingComponent);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController can't find the AimingComponent at BeginPlay()"));
-	}
+	UTankAimingComponent * TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(TankAimingComponent)) { return; }
+
+	FoundAimingComponent(TankAimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -38,13 +23,13 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	ATank * ControlledTank = GetControlledTank();
-	if (!ensure(ControlledTank)) { return; };
+	UTankAimingComponent * TankAimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(TankAimingComponent)) { return; }
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) // Has "side-effect", is going to ray trace
 	{
-		ControlledTank->AimAt(HitLocation);
+		TankAimingComponent->AimAt(HitLocation);
 	}
 	// If it hits the landscape
 		// Tell controller tank to aim at this point
@@ -106,9 +91,4 @@ bool ATankPlayerController::GetLookDirection(FVector2D &ScreenLocation, FVector 
 		ScreenLocation.Y,
 		CameraWorldLocation,
 		LookDirection);
-}
-
-ATank * ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
 }

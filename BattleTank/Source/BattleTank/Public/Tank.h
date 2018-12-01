@@ -9,7 +9,6 @@
 // Forward Declarations
 class UTankBarrel;
 class UTankTurret;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -22,8 +21,6 @@ public:
 	ATank();
 
 	virtual void BeginPlay() override;
-
-	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel * BarrelToSet);
@@ -46,9 +43,6 @@ public:
 	double LastFireTime = 0;
 
 protected:
-
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent * TankAimingComponent = nullptr;
 
 private:
 
