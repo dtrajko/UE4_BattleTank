@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Projectile.h"
-#include "Runtime/Engine/Classes/GameFramework/ProjectileMovementComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 // Sets default values
 AProjectile::AProjectile()
@@ -14,13 +14,6 @@ AProjectile::AProjectile()
 	ProjectileMovement->bAutoActivate = false;
 }
 
-// Called when the game starts or when spawned
-void AProjectile::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
 // Called every frame
 void AProjectile::Tick(float DeltaTime)
 {
@@ -30,7 +23,7 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float Speed)
 {
-	if (!ensure(ProjectileMovement)) return;
+	if (!ensure(ProjectileMovement)) { return; }
 
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();

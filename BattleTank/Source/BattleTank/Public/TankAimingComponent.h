@@ -5,11 +5,10 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
-
 // Forward Declarations
 class UTankBarrel;
 class UTankTurret;
-class UStaticMeshComponent;
+class AProjectile;
 
 // Enum for aiming state
 UENUM()
@@ -28,29 +27,43 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 
 public:
 
-	// Sets default values for this component's properties
-	UTankAimingComponent();
-
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void Initialize(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet);
 
 	void AimAt(FVector HitLocation);
 
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+		void Fire();
+
 protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Locked;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
+
 
 private:
 
+	// Sets default values for this component's properties
+	UTankAimingComponent();
+
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
 	void MoveBarrelTowards(FVector AimDirection);
+
+	// Called when the game starts
+	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 5;
 
 	UTankBarrel * Barrel = nullptr;
 	UTankTurret * Turret = nullptr;
 
+	double LastFireTime = 0;
 };

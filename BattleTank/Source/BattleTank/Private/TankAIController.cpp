@@ -2,13 +2,8 @@
 
 #include "../Public/TankAIController.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 
-
-void ATankAIController::BeginPlay()
-{
-	Super::BeginPlay();
-}
 
 void ATankAIController::Tick(float DeltaTime)
 {
@@ -28,7 +23,7 @@ void ATankAIController::Tick(float DeltaTime)
 	TankAimingComponent->AimAt(PlayerTank->GetActorLocation() + AimHigher);
 
 	// Fire if ready
-	Cast<ATank>(GetPawn())->Fire();
+	TankAimingComponent->Fire();
 }
 
 APawn * ATankAIController::GetPlayerTank() const
