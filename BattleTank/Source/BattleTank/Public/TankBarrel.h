@@ -26,5 +26,5 @@ private:
 		float MinElevationDegrees = 0; // TODO - Set MinElevationDegrees
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float MaxElevationDegrees = 45; // TODO - Set MaxElevationDegrees
+		float MaxElevationDegrees = 60; // TODO - Set MaxElevationDegrees
 };

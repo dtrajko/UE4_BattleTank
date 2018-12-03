@@ -62,7 +62,7 @@ private:
 		float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 5;
+		float ReloadTimeInSeconds = 4;
 
 	UTankBarrel * Barrel = nullptr;
 	UTankTurret * Turret = nullptr;

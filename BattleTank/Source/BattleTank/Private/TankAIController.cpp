@@ -19,7 +19,7 @@ void ATankAIController::Tick(float DeltaTime)
 	MoveToActor(PlayerTank, AcceptanceRadius);
 
 	// Aim towards the player
-	FVector AimHigher(0, 0, 140); // aim higher than the ground level
+	FVector AimHigher(0, 0, 80); // aim higher than the ground level
 	TankAimingComponent->AimAt(PlayerTank->GetActorLocation() + AimHigher);
 
 	// Fire if ready
