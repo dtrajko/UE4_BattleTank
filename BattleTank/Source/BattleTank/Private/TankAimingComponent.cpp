@@ -86,7 +86,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	FVector BarrelLocation = Barrel->GetComponentLocation();
 
 	FVector OutLaunchVelocity(0);
-	FVector StartLocation = Barrel->GetSocketLocation(FName("TubeEnd"));
+	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
 	// Calculate the OutLaunchVelocity
 	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity
@@ -127,11 +127,11 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	Barrel->Elevate(DeltaRotator.Pitch);
 	// Always yaw the shortest way
-	if (DeltaRotator.Yaw < 180)
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
 	{
 		Turret->Rotate(DeltaRotator.Yaw);
 	}
-	else
+	else // Avoid going the long way around
 	{
 		Turret->Rotate(-DeltaRotator.Yaw);
 	}
@@ -147,8 +147,8 @@ void UTankAimingComponent::Fire()
 		// Spawn a projectile at the socket location
 		AProjectile * Projectile = GetWorld()->SpawnActor<AProjectile>(
 			ProjectileBlueprint,
-			Barrel->GetSocketLocation(FName("TubeEnd")),
-			Barrel->GetSocketRotation(FName("TubeEnd"))
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);

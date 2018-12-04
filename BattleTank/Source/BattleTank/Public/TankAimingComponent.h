@@ -77,5 +77,5 @@ private:
 
 	FVector AimDirection;
 
-	int RoundsLeft = 20;
+	int RoundsLeft = 40;
 };
