@@ -39,7 +39,7 @@ public:
 	EFiringState GetFiringState() const;
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	int GetRoundsLeft() const;
+		int32 GetRoundsLeft() const;
 
 protected:
 
@@ -49,8 +49,19 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 8000.0f; // Sensible starting value of 1000 m/s
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float ReloadTimeInSeconds = 0.1f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 RoundsLeft = 40;
 
 private:
+
+	UTankBarrel * Barrel = nullptr;
+	UTankTurret * Turret = nullptr;
 
 	// Sets default values for this component's properties
 	UTankAimingComponent();
@@ -64,18 +75,8 @@ private:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 4000.0f; // Sensible starting value of 1000 m/s
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 4;
-
-	UTankBarrel * Barrel = nullptr;
-	UTankTurret * Turret = nullptr;
-
 	double LastFireTime = 0;
 
 	FVector AimDirection;
 
-	int RoundsLeft = 40;
 };
