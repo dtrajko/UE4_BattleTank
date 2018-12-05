@@ -2,8 +2,6 @@
 Content/StarterContent/Textures/
 Content/StarterContent/HDRI/
 
-**/StarterContent/
-
 # Custom - Visual Studio derived files
 .vs/**/ipch/
 *.VC.db-wal

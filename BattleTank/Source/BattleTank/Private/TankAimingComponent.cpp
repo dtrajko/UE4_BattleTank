@@ -152,6 +152,7 @@ void UTankAimingComponent::Fire()
 			);
 
 		Projectile->LaunchProjectile(LaunchSpeed);
+		UE_LOG(LogTemp, Warning, TEXT("Projectile fired at launch speed %f"), LaunchSpeed);
 		LastFireTime = FPlatformTime::Seconds();
 		RoundsLeft--;
 	}
