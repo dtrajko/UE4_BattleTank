@@ -53,7 +53,7 @@ protected:
 		float LaunchSpeed = 8000.0f; // Sensible starting value of 1000 m/s
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float ReloadTimeInSeconds = 2.0f;
+		float ReloadTimeInSeconds = 4.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		int32 RoundsLeft = 40;
