@@ -46,7 +46,7 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 		EFiringState FiringState = EFiringState::Reloading;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Setup")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
